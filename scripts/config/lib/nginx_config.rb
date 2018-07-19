@@ -23,7 +23,7 @@ class NginxConfig
     json["port"] ||= ENV["PORT"] || 5000
     json["root"] ||= DEFAULT[:root]
     json["encoding"] ||= DEFAULT[:encoding]
-
+    json["prerender_token"] ||= ""
     index = 0
     json["proxies"] ||= {}
     json["proxies"].each do |loc, hash|
