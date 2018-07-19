@@ -55,7 +55,7 @@ http {
   client_body_timeout 5;
 
   server {
-    listen <%= port %> reuseport ssl http2;
+    listen <%= port %> reuseport;
     charset <%= encoding %>;
     port_in_redirect off;
     keepalive_timeout <%= keepalive_timeout %>;
@@ -76,11 +76,11 @@ http {
       mruby_post_read_handler /app/bin/config/lib/ngx_mruby/headers.rb cache;
       <% #mruby_set $fallback /app/bin/config/lib/ngx_mruby/routes_fallback.rb cache; %>
     <% if clean_urls %>
-      try_files $uri.html $uri $uri/ @prerender;
-      <% #try_files $uri.html $uri $uri/ $fallback; %>
+      <%# try_files $uri.html $uri $uri/ @prerender; %>
+      try_files $uri.html $uri $uri/ $fallback;
     <% else %>
-      try_files $uri $uri/ @prerender;
-      <% #try_files $uri $uri/ $fallback; %>
+      <%# try_files $uri $uri/ @prerender; %>
+      #try_files $uri $uri/ $fallback;
     <% end %>
     }
 
