@@ -13,6 +13,7 @@ class NginxConfig
     tcp_nodelay: false,
     tcp_nopush: false,
     worker_rlimit_nofile: false,
+    sendfile_max_chunk: '1m',
     resolver: "8.8.8.8",
     logging: {
       "access" => true,
@@ -62,6 +63,8 @@ class NginxConfig
     json["tcp_nopush"] ||= DEFAULT[:tcp_nopush]
 
     json["worker_rlimit_nofile"] ||= DEFAULT[:worker_rlimit_nofile]
+
+    json["sendfile_max_chunk"] ||= DEFAULT[:sendfile_max_chunk]
 
     json["routes"] ||= {}
     json["routes"] = NginxConfigUtil.parse_routes(json["routes"])
