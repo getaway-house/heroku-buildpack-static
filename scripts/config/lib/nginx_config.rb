@@ -13,7 +13,9 @@ class NginxConfig
     logging: {
       "access" => true,
       "error" => "error"
-    }
+    },
+    basic_auth: false,
+    basic_auth_htpasswd_path: "/app/.htpasswd",
   }
 
   def initialize(json_file)
