@@ -9,6 +9,10 @@ class NginxConfig
     clean_urls: false,
     https_only: false,
     worker_connections: 512,
+    keepalive_timeout: 5,
+    tcp_nodelay: false,
+    tcp_nopush: false,
+    worker_rlimit_nofile: false,
     resolver: "8.8.8.8",
     logging: {
       "access" => true,
@@ -51,6 +55,13 @@ class NginxConfig
     json["basic_auth"] = true unless ENV['BASIC_AUTH_USERNAME'].nil?
     json["basic_auth"] ||= DEFAULT[:basic_auth]
     json["basic_auth_htpasswd_path"] ||= DEFAULT[:basic_auth_htpasswd_path]
+
+    json["keepalive_timeout"] ||= DEFAULT[:keepalive_timeout]
+
+    json["tcp_nodelay"] ||= DEFAULT[:tcp_nodelay]
+    json["tcp_nopush"] ||= DEFAULT[:tcp_nopush]
+
+    json["worker_rlimit_nofile"] ||= DEFAULT[:worker_rlimit_nofile]
 
     json["routes"] ||= {}
     json["routes"] = NginxConfigUtil.parse_routes(json["routes"])

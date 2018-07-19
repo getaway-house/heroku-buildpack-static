@@ -1,6 +1,10 @@
 daemon off;
 worker_processes auto;
 
+<% if worker_rlimit_nofile %>
+  worker_rlimit_nofile <%= worker_rlimit_nofile %>;
+<% end %>
+
 events {
   use epoll;
   accept_mutex on;
@@ -34,6 +38,19 @@ http {
   default_type application/octet-stream;
   sendfile on;
 
+  # set to 1 MB to stop single fast connection occupying worker process
+  <% if sendfile_max_chunk %>
+    sendfile_max_chunk <%= sendfile_max_chunk %>;
+  <% end %>
+
+  <% if tcp_nopush %>
+    tcp_nopush on;
+  <% end %>
+
+  <% if tcp_nodelay %>
+    tcp_nodelay on;
+  <% end %>
+
   #Must read the body in 5 seconds.
   client_body_timeout 5;
 
@@ -41,7 +58,7 @@ http {
     listen <%= port %> reuseport;
     charset <%= encoding %>;
     port_in_redirect off;
-    keepalive_timeout 5;
+    keepalive_timeout <%= keepalive_timeout %>;
     root <%= root %>;
   <% if error_page %>
     error_page 404 500 /<%= error_page %>;
