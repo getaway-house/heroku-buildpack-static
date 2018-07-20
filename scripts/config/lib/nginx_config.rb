@@ -12,6 +12,7 @@ class NginxConfig
     keepalive_timeout: 5,
     tcp_nodelay: false,
     tcp_nopush: false,
+    static_caching: false,
     worker_rlimit_nofile: false,
     sendfile_max_chunk: '1m',
     resolver: "8.8.8.8",
@@ -65,6 +66,8 @@ class NginxConfig
     json["worker_rlimit_nofile"] ||= DEFAULT[:worker_rlimit_nofile]
 
     json["sendfile_max_chunk"] ||= DEFAULT[:sendfile_max_chunk]
+
+    json["static_caching"] ||= DEFAULT[:static_caching]
 
     json["routes"] ||= {}
     json["routes"] = NginxConfigUtil.parse_routes(json["routes"])

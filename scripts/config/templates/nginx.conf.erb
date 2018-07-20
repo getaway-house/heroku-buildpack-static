@@ -82,6 +82,12 @@ http {
     <% end %>
     }
 
+  <% if static_caching %>
+    location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
+      expires 365d;
+    }
+  <% end %>
+
     location @prerender {
         proxy_set_header X-Prerender-Token <%= prerender_token %>;
         
