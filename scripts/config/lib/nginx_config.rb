@@ -23,6 +23,7 @@ class NginxConfig
     basic_auth: false,
     basic_auth_htpasswd_path: "/app/.htpasswd",
     prerender_token: ENV["PRERENDER_TOKEN"],
+    underscores_in_headers: false,
   }
 
   def initialize(json_file)
@@ -68,6 +69,8 @@ class NginxConfig
     json["sendfile_max_chunk"] ||= DEFAULT[:sendfile_max_chunk]
 
     json["static_caching"] ||= DEFAULT[:static_caching]
+
+    json["underscores_in_headers"] ||= DEFAULT[:underscores_in_headers]
 
     json["routes"] ||= {}
     json["routes"] = NginxConfigUtil.parse_routes(json["routes"])

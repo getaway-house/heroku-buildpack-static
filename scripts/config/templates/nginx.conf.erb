@@ -60,6 +60,9 @@ http {
     port_in_redirect off;
     keepalive_timeout <%= keepalive_timeout %>;
     root <%= root %>;
+  <% if underscores_in_headers %>
+    underscores_in_headers  on;
+  <% end %>
   <% if error_page %>
     error_page 404 500 /<%= error_page %>;
   <% end %>
